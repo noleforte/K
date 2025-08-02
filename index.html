@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>NURUNGI</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="style.css" />
+      <link rel="icon" href="favicon.ico" type="image/x-icon" />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Marvin&display=swap"
+         rel="stylesheet"
+      />
+      <style>
+         .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 999;
+         }
+
+         .welcome-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+         }
+
+         .welcome-popup img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+         }
+
+         .enter-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: inline-block;
+         }
+
+         .enter-button img {
+            width: 120px;
+            height: auto;
+            transition: transform 0.3s ease;
+         }
+
+         .enter-button:hover img {
+            transform: scale(1.1);
+         }
+
+         @keyframes bounce {
+            0%,
+            100% {
+               transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+               transform: translate(-50%, -50%) scale(1.1);
+            }
+         }
+
+         .mute-button {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+         }
+
+         .mute-button img {
+            width: 40px;
+            height: 40px;
+         }
+
+         @media (max-width: 768px) {
+            .welcome-popup {
+               width: 95%;
+               max-width: 400px;
+            }
+
+            .enter-button img {
+               width: 100px;
+            }
+
+            .mute-button {
+               top: 80px;
+               right: 15px;
+            }
+
+            .mute-button img {
+               width: 30px;
+               height: 30px;
+            }
+         }
+      </style>
+   </head>
+   <body>
+      <div class="overlay" id="overlay"></div>
+      <div class="welcome-popup" id="welcomePopup">
+         <img src="assets/welcome.png" alt="Welcome" />
+         <button class="enter-button" id="enterButton">
+            <img src="assets/entr .png" alt="Enter" />
+         </button>
+      </div>
+
+      <audio id="backgroundMusic" loop>
+         <source
+            src="Studioman_Remix_When_Mama_Isnt_Home.mp3"
+            type="audio/mpeg"
+         />
+      </audio>
+
+      <button class="mute-button" id="muteButton">
+         <img src="assets/sound.png" alt="Mute/Unmute" id="muteButtonImg" />
+      </button>
+
+      <div class="header-container">
+         <header>
+            <div class="logo">
+               <img src="assets/ico_1.png" alt="KUTTO" />
+            </div>
+            <div class="social-buttons">
+               <a href="https://t.me/NurungiSolana" target="_blank">
+                  <img src="assets/button_1.png" alt="Telegram" />
+               </a>
+               <a
+                  href="https://dexscreener.com/solana/ntj4GH3WNaLLUipvEGajfzN33NkLXiNM2Rm6GV6pump"
+                  target="_blank"
+               >
+                  <img src="assets/button_2.png" alt="DexScreener" />
+               </a>
+               <a
+                  href="https://www.dextools.io/app/en/solana/pair-explorer/H5H78rAZmn4dBgvyb8HKG5vBVtdeGQopStDScVDRii8x?t=1754131249486"
+                  target="_blank"
+               >
+                  <img src="assets/button_3.png" alt="DexTools" />
+               </a>
+               <a href="https://x.com/NurungiSolana" target="_blank">
+                  <img src="assets/button_4.png" alt="Twitter" />
+               </a>
+            </div>
+         </header>
+      </div>
+
+      <section class="first-block">
+         <img src="assets/rat_4.png" alt="KUTTO" />
+         <img src="assets/title.png" alt="KUTTO" />
+         <img src="assets/rat_3.png" alt="KUTTO" />
+      </section>
+
+      <section class="food-block">
+         <img src="assets/food_4.png" alt="Food" />
+         <img src="assets/food_2.png" alt="Food" />
+         <img src="assets/food_3.png" alt="Food" />
+         <img src="assets/food_1.png" alt="Food" />
+      </section>
+
+      <section class="contract-block">
+         <img src="assets/rat_1.png" alt="KUTTO" />
+         <div class="contract" id="contract">
+            ntj4GH3WNaLLUipvEGajfzN33NkLXiNM2Rm6GV6pump
+         </div>
+         <img src="assets/rat_2.png" alt="KUTTO" />
+      </section>
+
+      <div class="popup-image-left">
+         <img src="assets/web_4.gif" alt="Animation" />
+      </div>
+      <div class="popup-image-right">
+         <img src="assets/web_4.gif" alt="Animation" />
+      </div>
+
+      <div class="copy-alert" id="copyAlert">
+         <img src="assets/food_3.png" alt="Success" />
+         <span>Contract copied!</span>
+      </div>
+
+      <script>
+         document
+            .getElementById('contract')
+            .addEventListener('click', function () {
+               navigator.clipboard.writeText(this.textContent.trim());
+               const alert = document.getElementById('copyAlert');
+               alert.classList.add('show');
+               setTimeout(() => {
+                  alert.classList.remove('show');
+               }, 2000);
+            });
+
+         const welcomePopup = document.getElementById('welcomePopup');
+         const overlay = document.getElementById('overlay');
+         const enterButton = document.getElementById('enterButton');
+         const backgroundMusic = document.getElementById('backgroundMusic');
+         const muteButton = document.getElementById('muteButton');
+         const muteButtonImg = document.getElementById('muteButtonImg');
+         let isMuted = false;
+
+         function closeWelcome() {
+            welcomePopup.style.display = 'none';
+            overlay.style.display = 'none';
+            backgroundMusic.play();
+         }
+
+         welcomePopup.addEventListener('click', (e) => {
+            if (e.target === welcomePopup) {
+               closeWelcome();
+            }
+         });
+
+         enterButton.addEventListener('click', closeWelcome);
+
+         muteButton.addEventListener('click', () => {
+            if (isMuted) {
+               backgroundMusic.play();
+               muteButtonImg.src = 'assets/sound.png';
+               isMuted = false;
+            } else {
+               backgroundMusic.pause();
+               muteButtonImg.src = 'assets/no sound1.png';
+               isMuted = true;
+            }
+         });
+      </script>
+   </body>
+</html>
